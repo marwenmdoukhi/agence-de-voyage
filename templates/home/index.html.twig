@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="jumbotron mt-4">
+            <h1 class="display-4 text-center text-md-left">Bienvenue </h1>
+            <p class="lead text-center text-md-left">Mise en relation des voyageurs et propriétaires souhaitant profiter d'opportunités tout en gagnant de l'argent !</p>
+            <hr class="my-4">
+            <p class="text-center text-md-left">Vous cherchez une location pour votre prochain voyage ?</p>
+            <p class="lead text-center text-md-left">
+                <a class="btn btn-primary btn-lg" href="{{ path('ad.index') }}" role="button">Découvrez ici toutes nos annonces</a>
+            </p>
+        </div>
+
+        <h2 class="my-5">Nos meilleures locations</h2>
+        <div class="row">
+            {% for data in ads %}
+                {% include 'ad/_list.html.twig' with {'ad': data.annonce} %}
+            {% endfor %}
+        </div>
+
+        <h2 class="my-5">Nos propriétaires stars</h2>
+        <div class="row">
+            {% for data in users %}
+                <div class="col">
+                    <div class="card border-secondary mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ data.user.fullName }}</h4>
+                            <hr>
+                            <div class="card-text">
+                                <img src="{{ data.user.avatar }}" alt="{{ data.user.fullName }}" class="avatar avatar-medium float-left mr-3">
+                                <p>
+                                    {{ data.user.presentation }}
+                                </p>
+                                <a href="{{ path('user.show', {'slug': data.user.slug}) }}" class="btn btn-info">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}
